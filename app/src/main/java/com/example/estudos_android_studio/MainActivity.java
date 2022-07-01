@@ -3,7 +3,8 @@ package com.example.estudos_android_studio;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,14 +22,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Bem-vindo!", Toast.LENGTH_LONG).show();
 
         // Implementando lista de Alunos
-        List<String> alunos = new ArrayList<>(Arrays.asList("Felipe", "Lucas", "Caio"));
+        List<String> alunos = new ArrayList<>(Arrays.asList("Felipe", "Lucas", "Caio", "Diego", "Felix"));
 
-        // Encontrando a textView pelo id e atribuindo um valor de acordo como ArrayList
-        TextView primeiroAluno = findViewById(R.id.textView);
-        TextView segundoAluno = findViewById(R.id.textView2);
-        TextView terceiroAluno = findViewById(R.id.textView3);
-        primeiroAluno.setText(alunos.get(0));
-        segundoAluno.setText(alunos.get(1));
-        terceiroAluno.setText(alunos.get(2));
+        // Implementando lista de alunos com ListView e ArrayAdapter
+        ListView listaDeAlunos = findViewById(R.id.lista_de_alunos);
+        listaDeAlunos.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                alunos));
     }
 }
