@@ -48,9 +48,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             // Chamando metodo de salvamento de Aluno
             dao.salva(alunoCriado);
 
-            // Enviando o Aluno para a clase DAO
-            startActivity(new Intent(FormularioAlunoActivity.this,
-                    ListaAlunosActivity.class));
+            finish();
 
             }
         });
