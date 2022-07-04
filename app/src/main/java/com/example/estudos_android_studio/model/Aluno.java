@@ -11,16 +11,10 @@ public class Aluno {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    @Override
+    public String toString() {
+        return "Nome: " + nome + " | " +
+                " Telefone: " + telefone + " | " +
+                " Email: " + email;
     }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
 }

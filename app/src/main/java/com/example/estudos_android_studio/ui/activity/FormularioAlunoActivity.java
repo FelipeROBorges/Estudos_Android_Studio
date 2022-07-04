@@ -2,6 +2,7 @@ package com.example.estudos_android_studio.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.estudos_android_studio.R;
 import com.example.estudos_android_studio.model.Aluno;
+import com.example.estudos_android_studio.model.AlunoDAO;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
@@ -17,6 +19,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
+
+
+        AlunoDAO dao = new AlunoDAO();
 
         // Fazendo o tacking das view fornecidas pela interface visual
         // Importante na utilização de classes anônimas deixar os valores como final, caso contrario,
@@ -40,12 +45,13 @@ public class FormularioAlunoActivity extends AppCompatActivity {
              // Criando um objeto para armazenar as informações
              Aluno alunoCriado = new Aluno (nome, telefone, email);
 
-             // Mensagem de teste para visualização de informações na tela
-                Toast.makeText(FormularioAlunoActivity.this,
-                        alunoCriado.getNome() +
-                        " - " + alunoCriado.getEmail() + " - " +
-                        alunoCriado.getTelefone(),
-                        Toast.LENGTH_LONG).show();
+            // Chamando metodo de salvamento de Aluno
+            dao.salva(alunoCriado);
+
+            // Enviando o Aluno para a clase DAO
+            startActivity(new Intent(FormularioAlunoActivity.this,
+                    ListaAlunosActivity.class));
+
             }
         });
 

@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.estudos_android_studio.R;
+import com.example.estudos_android_studio.model.AlunoDAO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,19 +22,19 @@ public class ListaAlunosActivity extends AppCompatActivity {
         // Fazendo o link com um arquivo DML de visualização
         setContentView(R.layout.activity_lista_alunos);
 
+        // Instanciando classe DAO
+        AlunoDAO dao = new AlunoDAO();
+
         // Definindo o nome exibido na parte superior da tela
         setTitle("Lista de Alunos");
 
         // Mensagem de entrada do app
         Toast.makeText(this, "Bem-vindo!", Toast.LENGTH_LONG).show();
 
-        // Implementando lista de Alunos
-        List<String> alunos = new ArrayList<>(Arrays.asList("Felipe", "Lucas", "Caio", "Diego", "Felix"));
-
-        // Implementando lista de alunos com ListView e ArrayAdapter
+        // Implementando lista de alunos com classe DAO
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_lista_de_alunos);
-        listaDeAlunos.setAdapter(new ArrayAdapter<String>(this,
+        listaDeAlunos.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                alunos));
+                dao.todos()));
     }
 }
