@@ -64,8 +64,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
                 Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
-                Log.i("Aluno:", "" + alunoEscolhido);
-                Toast.makeText(ListaAlunosActivity.this, "Clique Funcionando.", Toast.LENGTH_SHORT).show();
                 abreFormularioModoEditaAluno(alunoEscolhido);
             }
         });
