@@ -1,6 +1,8 @@
 package com.example.estudos_android_studio.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +26,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         inicializaCampos();
         salvaAluno();
 
+        // Pegando dados passados pelo putExtra atravez de um Intent
+        Intent dados = getIntent();
+        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
+
+        // Pegando os valores contidos no objeto aluno
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
     }
 
     private void salvaAluno() {
