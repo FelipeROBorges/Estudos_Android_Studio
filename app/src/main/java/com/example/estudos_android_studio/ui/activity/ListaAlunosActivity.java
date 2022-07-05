@@ -28,6 +28,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setTitle(TITLE_APPBAR);
         Toast.makeText(this, "Bem-vindo!", Toast.LENGTH_LONG).show();
         configuraFabNovoAluno();
+        dao.salva(new Aluno("Felipe", "1122223333", "felipe@lokomail.com"));
     }
 
     private void configuraFabNovoAluno() {
@@ -56,7 +57,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         // Designando uma variavel para o array de alunos
         final List<Aluno> alunos = dao.todos();
-        
+
         listaDeAlunos.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 alunos));

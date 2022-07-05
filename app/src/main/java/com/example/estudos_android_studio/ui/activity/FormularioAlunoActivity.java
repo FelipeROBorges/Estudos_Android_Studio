@@ -17,6 +17,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoNome;
     private EditText campoEmail;
     private EditText campoTelefone;
+    private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         // Pegando dados passados pelo putExtra atravez de um Intent
         Intent dados = getIntent();
-        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
+        aluno = (Aluno) dados.getSerializableExtra("aluno");
 
         // Pegando os valores contidos no objeto aluno
         campoNome.setText(aluno.getNome());
@@ -41,8 +42,11 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Aluno alunoCriado = getAluno();
-            dao.salva(alunoCriado);
+              // Temporariamente retirando função de salvamento
+/*            Aluno alunoCriado = getAluno();
+            dao.salva(alunoCriado);*/
+            preencheAluno();
+            dao.edita(aluno);
             finish();
             }
         });
@@ -54,13 +58,16 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
     }
 
-    @NonNull
-    private Aluno getAluno() {
+
+    private void preencheAluno() {
         String nome = campoNome.getText().toString();
         String email = campoEmail.getText().toString();
         String telefone = campoTelefone.getText().toString();
-        Aluno alunoCriado = new Aluno (nome, telefone, email);
-        return alunoCriado;
+
+        // Adicionando a função de edição de valores de Aluno
+        aluno.setNome(nome);
+        aluno.setEmail(email);
+        aluno.setTelefone(telefone);
 
     }
 
