@@ -1,5 +1,4 @@
 package com.example.estudos_android_studio.ui.activity;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import java.util.List;
 public class ListaAlunosActivity extends AppCompatActivity {
 
     public static final String TITLE_APPBAR = "Lista de Alunos";
+    public static final String CHAVE_ALUNO = "aluno";
     private final AlunoDAO dao = new AlunoDAO();
 
 
@@ -54,37 +54,37 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraAluno() {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_lista_de_alunos);
-
-        // Designando uma variavel para o array de alunos
         final List<Aluno> alunos = dao.todos();
+        configuraAdapter(listaDeAlunos, alunos);
+        configuraListenerDeCliquePorItem(listaDeAlunos);
+    }
 
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                alunos));
-
-        // Definindo ação ao clicar na lista de alunos
+    private void configuraListenerDeCliquePorItem(ListView listaDeAlunos) {
         listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-                Aluno alunoEscolhido = alunos.get(posicao);
-
-                // Enviando informações para o logcat do android studio
+                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
                 Log.i("Aluno:", "" + alunoEscolhido);
-
-                // Enviado mensagem de confirmação de clique
                 Toast.makeText(ListaAlunosActivity.this, "Clique Funcionando.", Toast.LENGTH_SHORT).show();
-
-                // Implmentando Intent para levar a outra página
-                Intent vaiParaFormularioAlunoActivity =
-                        new Intent(ListaAlunosActivity.this,
-                                FormularioAlunoActivity.class);
-
-                // Enviando informações atravez do putExtra para a Activity de destino
-                vaiParaFormularioAlunoActivity.putExtra("aluno", alunoEscolhido);
-
-                startActivity(vaiParaFormularioAlunoActivity);
+                abreFormularioModoEditaAluno(alunoEscolhido);
             }
         });
-        };
+    }
+
+    private void abreFormularioModoEditaAluno(Aluno alunoEscolhido) {
+        Intent vaiParaFormularioAlunoActivity =
+                new Intent(ListaAlunosActivity.this,
+                        FormularioAlunoActivity.class);
+        vaiParaFormularioAlunoActivity.putExtra(CHAVE_ALUNO, alunoEscolhido);
+        startActivity(vaiParaFormularioAlunoActivity);
+    }
+
+    private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
+        listaDeAlunos.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                alunos));
+    }
+
+    ;
     }
 

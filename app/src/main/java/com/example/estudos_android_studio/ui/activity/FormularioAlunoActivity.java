@@ -1,7 +1,5 @@
 package com.example.estudos_android_studio.ui.activity;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +10,9 @@ import com.example.estudos_android_studio.model.AlunoDAO;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    public static final String TITULO_APPBAR = "Novo Aluno";
+    public static final String TITULO_APPBAR_NOVO_ALUNO = "Novo Aluno";
+    public static final String CHAVE_ALUNO = "aluno";
+    private static final String TITULO_APPBAR_EDITA_ALUNO = "Edita Aluno";
     AlunoDAO dao = new AlunoDAO();
     private EditText campoNome;
     private EditText campoEmail;
@@ -23,22 +23,27 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
-        setTitle(TITULO_APPBAR);
         inicializaCampos();
         salvaAluno();
+        carregaAluno();
+    }
 
-        // Pegando dados passados pelo putExtra atravez de um Intent
+    private void carregaAluno() {
         Intent dados = getIntent();
-        if(dados.hasExtra("aluno")){
-            aluno = (Aluno) dados.getSerializableExtra("aluno");
-            // Pegando os valores contidos no objeto aluno
-            campoNome.setText(aluno.getNome());
-            campoTelefone.setText(aluno.getTelefone());
-            campoEmail.setText(aluno.getEmail());
+        if(dados.hasExtra(CHAVE_ALUNO)){
+            setTitle(TITULO_APPBAR_EDITA_ALUNO);
+            aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+            preencheCampos();
         } else {
+            setTitle(TITULO_APPBAR_NOVO_ALUNO);
             aluno = new Aluno();
         }
+    }
 
+    private void preencheCampos() {
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
     }
 
     private void salvaAluno() {
@@ -46,15 +51,19 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            preencheAluno();
-            if (aluno.temIdValido()){
-                dao.edita(aluno);
-            } else {
-                dao.salva(aluno);
-            }
-            finish();
+                finalizaFormulario();
             }
         });
+    }
+
+    private void finalizaFormulario() {
+        preencheAluno();
+        if (aluno.temIdValido()){
+            dao.edita(aluno);
+        } else {
+            dao.salva(aluno);
+        }
+        finish();
     }
 
     private void inicializaCampos() {
@@ -63,13 +72,10 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
     }
 
-
     private void preencheAluno() {
         String nome = campoNome.getText().toString();
         String email = campoEmail.getText().toString();
         String telefone = campoTelefone.getText().toString();
-
-        // Adicionando a função de edição de valores de Aluno
         aluno.setNome(nome);
         aluno.setEmail(email);
         aluno.setTelefone(telefone);
