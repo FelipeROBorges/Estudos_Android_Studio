@@ -19,6 +19,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public static final String TITLE_APPBAR = "Lista de Alunos";
     public static final String CHAVE_ALUNO = "aluno";
     private final AlunoDAO dao = new AlunoDAO();
+    private ArrayAdapter<Aluno> adapter;
 
 
     @Override
@@ -68,6 +69,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
                 // Definindo função de remover alono de acordo com o click longo
                 dao.remover(alunoEscolhido);
+
+                // Para melhor experiencia de usuário foi adicionado o uma atualização de estado
+                // da Activity logo após sua exclução, por questões de feedback
+                // configuraAluno();
+                // Solução não viavel pela especificidade do metodo, melhor criar um metodo mais
+                // coerente para ataualizar o estaod da Activity
+
+                // No lugar de atualizar a Activity com a função onResume, é mais viavel somente
+                // atualizar de forma dinamica atravez do adapterView
+                adapter.remove(alunoEscolhido);
                 return false;
             }
         });
@@ -92,9 +103,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                alunos));
+                alunos);
+        listaDeAlunos.setAdapter(adapter);
     }
 
     ;
