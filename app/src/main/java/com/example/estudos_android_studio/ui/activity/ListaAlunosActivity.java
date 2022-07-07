@@ -37,7 +37,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        
+
         // Referenciando menu criado no arquivo de menu do res
         getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
     }
@@ -46,13 +46,25 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
-        // Adicionando um Adapter para o menu de contexto
-        AdapterView.AdapterContextMenuInfo menuInfo =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int itemId = item.getItemId();
 
-        // Pegando a posição do aluno e removendo o mesmo
-        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-        removeAluno(alunoEscolhido);
+        // Pegando referencia do titulo do menu
+        //CharSequence tituloDoMenu = item.getTitle();
+
+        // Adicionando um Adapter para o menu de contexto
+
+        // Condicional referente ao id do item do menu
+        if(itemId == R.id.activity_lista_alunos_menu_remover){
+
+            // Adicionando um Adapter para o menu de contexto
+            AdapterView.AdapterContextMenuInfo menuInfo =
+                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+            // Pegando a posição do aluno e removendo o mesmo
+            Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+            removeAluno(alunoEscolhido);
+        }
+
         return super.onContextItemSelected(item);
     }
 
