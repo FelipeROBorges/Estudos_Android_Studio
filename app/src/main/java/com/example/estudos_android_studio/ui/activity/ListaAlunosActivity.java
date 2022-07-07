@@ -29,6 +29,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         Toast.makeText(this, "Bem-vindo!", Toast.LENGTH_LONG).show();
         configuraFabNovoAluno();
         dao.salva(new Aluno("Felipe", "1122223333", "felipe@lokomail.com"));
+
     }
 
     private void configuraFabNovoAluno() {
@@ -57,6 +58,19 @@ public class ListaAlunosActivity extends AppCompatActivity {
         final List<Aluno> alunos = dao.todos();
         configuraAdapter(listaDeAlunos, alunos);
         configuraListenerDeCliquePorItem(listaDeAlunos);
+
+        //Implementando ação ao licar no item por um longo periodo
+        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long id) {
+                // Pegando Aluno pela posição
+                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+
+                // Definindo função de remover alono de acordo com o click longo
+                dao.remover(alunoEscolhido);
+                return false;
+            }
+        });
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaDeAlunos) {
