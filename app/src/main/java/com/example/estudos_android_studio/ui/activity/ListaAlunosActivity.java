@@ -18,7 +18,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private final AlunoDAO dao = new AlunoDAO();
     private ArrayAdapter<Aluno> adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +52,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void atualizaAlunos() {
-        // Ao invés de carregar todas as informações de configurção do metodo configuraAluno é
-        // mais coerente implementar os metodos do proprio adapter para limpar a visualização e
-        // recarregar os Alunos contidos no dao
         adapter.clear();
         adapter.addAll(dao.todos());
     }
@@ -64,8 +60,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_lista_de_alunos);
         configuraAdapter(listaDeAlunos);
         configuraListenerDeCliquePorItem(listaDeAlunos);
-
-        //Implementando ação ao licar no item por um longo periodo
         configuraListenerDeCliqueLongoPorItem(listaDeAlunos);
     }
 
@@ -73,7 +67,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-                // Pegando Aluno pela posição
                 Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
                 removeAluno(alunoEscolhido);
                 return false;
@@ -82,17 +75,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void removeAluno(Aluno alunoEscolhido) {
-        // Definindo função de remover alono de acordo com o click longo
         dao.remover(alunoEscolhido);
-
-        // Para melhor experiencia de usuário foi adicionado o uma atualização de estado
-        // da Activity logo após sua exclução, por questões de feedback
-        // configuraAluno();
-        // Solução não viavel pela especificidade do metodo, melhor criar um metodo mais
-        // coerente para ataualizar o estaod da Activity
-
-        // No lugar de atualizar a Activity com a função onResume, é mais viavel somente
-        // atualizar de forma dinamica atravez do adapterView
         adapter.remove(alunoEscolhido);
     }
 
@@ -119,7 +102,5 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1);
         listaDeAlunos.setAdapter(adapter);
     }
-
-    ;
-    }
+}
 

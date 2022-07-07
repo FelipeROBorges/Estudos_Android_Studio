@@ -48,8 +48,6 @@ public class AlunoDAO {
     }
 
     public void remover(Aluno aluno) {
-
-        // Pegando o aluno pelo sua posição verificando se é nulo e removendo o mesmo do array
         Aluno alunoDevolvido = buscaAlunoPeloId(aluno);
         if(alunoDevolvido != null) {
             alunos.remove(alunoDevolvido);
