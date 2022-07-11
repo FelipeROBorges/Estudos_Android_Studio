@@ -32,39 +32,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
         dao.salva(new Aluno("Felipe", "1122223333", "felipe@lokomail.com"));
     }
 
-    // Adicionando menu de contexto quando é feito o click longo, subistituindo o click longo
-    // de remoção
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-
-        // Referenciando menu criado no arquivo de menu do res
         getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
     }
 
-    // Implentando ação ao clicar no item de menu info
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
         int itemId = item.getItemId();
-
-        // Pegando referencia do titulo do menu
-        //CharSequence tituloDoMenu = item.getTitle();
-
-        // Adicionando um Adapter para o menu de contexto
-
-        // Condicional referente ao id do item do menu
         if(itemId == R.id.activity_lista_alunos_menu_remover){
-
-            // Adicionando um Adapter para o menu de contexto
             AdapterView.AdapterContextMenuInfo menuInfo =
                     (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-            // Pegando a posição do aluno e removendo o mesmo
             Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
             removeAluno(alunoEscolhido);
         }
-
         return super.onContextItemSelected(item);
     }
 
@@ -100,7 +83,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configuraListenerDeCliquePorItem(listaDeAlunos);
         registerForContextMenu(listaDeAlunos);
     }
-
 
     private void removeAluno(Aluno alunoEscolhido) {
         dao.remover(alunoEscolhido);
