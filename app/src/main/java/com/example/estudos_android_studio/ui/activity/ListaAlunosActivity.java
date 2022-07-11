@@ -29,7 +29,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         Toast.makeText(this, "Bem-vindo!", Toast.LENGTH_LONG).show();
         configuraFabNovoAluno();
         configuraAluno();
-        dao.salva(new Aluno("Felipe", "1122223333", "felipe@lokomail.com"));
+            dao.salva(new Aluno("Felipe", "1122223333", "felipe@lokomail.com"));
+            dao.salva(new Aluno("Roberto", "3312322313", "roberto@lokomail.com"));
     }
 
     @Override
