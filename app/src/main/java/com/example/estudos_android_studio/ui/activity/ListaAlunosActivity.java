@@ -4,22 +4,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.example.estudos_android_studio.R;
 import com.example.estudos_android_studio.model.Aluno;
 import com.example.estudos_android_studio.model.AlunoDAO;
+import com.example.estudos_android_studio.ui.adapters.ListaAlunosAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
     public static final String TITLE_APPBAR = "Lista de Alunos";
     public static final String CHAVE_ALUNO = "aluno";
     private final AlunoDAO dao = new AlunoDAO();
-    private ArrayAdapter<Aluno> adapter;
+    private ListaAlunosAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +116,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(ListView listaDeAlunos) {
-        adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1);
+
+        // Visando não implementar muitos metodos desnecessários utilizasse o BaseAdapter
+        // Que contem a possibilidade de adicionar mais de uma textview
+        adapter = new ListaAlunosAdapter(this);
         listaDeAlunos.setAdapter(adapter);
     }
+
 }
